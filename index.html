@@ -50,8 +50,8 @@
     nav.scrolled{box-shadow:0 4px 30px rgba(124,58,237,0.1)}
     .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
     .nav-logo-img{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:center;border:2px solid rgba(124,58,237,0.2)}
-    .nav-logo-text{font-family:"Roboto Slab",serif;font-size:1.4rem;font-weight:800;color:var(--sky-deep);letter-spacing:0.2px}
-    .nav-logo-text .white-f{color:var(--sky)}
+    .nav-logo-text{font-family:"Roboto Slab",serif;font-size:1.4rem;font-weight:800;color:var(--sky-deep);letter-spacing:0.2px;white-space:nowrap}
+    .nav-logo-text .white-f{color:var(--sky-deep)}
     .nav-links{display:flex;align-items:center;gap:1.8rem;list-style:none}
     .nav-links a{font-size:0.85rem;font-weight:500;color:var(--ink-soft);text-decoration:none;position:relative;padding-bottom:2px;transition:color 0.25s;letter-spacing:0.2px}
     .nav-links a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--sky);border-radius:2px;transition:width 0.3s}
@@ -228,7 +228,7 @@
     .footer-brand-row{display:flex;align-items:center;gap:10px;margin-bottom:0.8rem}
     .footer-logo-img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,0.15)}
     .footer-logo-text{font-family:"Roboto Slab",serif;font-size:1.35rem;font-weight:800;color:#fff;letter-spacing:0.2px}
-    .footer-logo-text .white-f{color:var(--sky-light)}
+    .footer-logo-text .white-f{color:#fff}
     .footer-brand p{font-size:0.83rem;max-width:250px;line-height:1.75;font-weight:300}
     .footer-links h4{color:#fff;font-size:0.82rem;font-weight:700;margin-bottom:1rem;letter-spacing:0.5px}
     .footer-links ul{list-style:none;display:flex;flex-direction:column;gap:0.65rem}
@@ -257,6 +257,8 @@
       .gallery-grid{grid-auto-rows:180px}
     }
     @media(max-width:900px){
+      .nav-links{display:none}
+      .hamburger{display:flex}
       .about-inner,.volunteer-inner{grid-template-columns:1fr;gap:3rem}
       .contact-grid{grid-template-columns:1fr;gap:2.5rem}
       .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
@@ -268,8 +270,6 @@
       .impact-strip{gap:2.5rem}
     }
     @media(max-width:680px){
-      .nav-links{display:none}
-      .hamburger{display:flex}
       .mission-grid,.form-row{grid-template-columns:1fr}
       .gallery-grid{grid-template-columns:1fr}
       .g-item:nth-child(1),.g-item:nth-child(5),.g-item:nth-child(4),.g-item:nth-child(6){grid-column:span 1}
