@@ -1,0 +1,31 @@
+{
+  "name": "amrix-forde-donations",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Amrix Forde donation platform: static site + Razorpay-backed donation API",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "NODE_ENV=development node server/server.js",
+    "migrate": "node server/db/migrate.js",
+    "test": "node --test",
+    "seed:admin": "node server/scripts/createAdmin.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "express-session": "^1.18.0",
+    "helmet": "^7.1.0",
+    "razorpay": "^2.9.8"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  }
+}

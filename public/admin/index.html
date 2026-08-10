@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin - Amrix Forde</title>
+<style>
+  :root{
+    --sky:#7C3AED;--sky-light:#C4B5FD;--sky-pale:#F5F3FF;
+    --sky-deep:#5B21B6;--sky-darker:#3B0F8C;
+    --white:#fff;--ink:#0A1F2E;
+    --ink-soft:#3A5568;--ink-muted:#718FA4;
+    --cream:#F5FAFD;--border:rgba(124,58,237,0.15);
+    --r-sm:12px;--r-md:16px;--r-lg:24px;--r-pill:50px;
+    --shadow-sm:0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md:0 10px 30px rgba(124,58,237,0.14);
+    --ok:#1a7f4b;--warn:#b45309;--bad:#b91c1c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Inter",-apple-system,sans-serif;color:var(--ink);background:var(--cream);min-height:100vh}
+  a{color:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
+  header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap}
+  .brand{font-weight:800;color:var(--sky-deep);font-size:1.15rem}
+  .brand span{color:var(--ink-muted);font-weight:500;font-size:0.85rem;margin-left:0.5rem}
+  button{font-family:inherit;cursor:pointer}
+  .btn{background:var(--sky-deep);color:#fff;border:none;padding:0.65rem 1.3rem;border-radius:var(--r-pill);font-weight:600;font-size:0.85rem}
+  .btn:hover{background:var(--sky)}
+  .btn:disabled{opacity:0.55;cursor:not-allowed}
+  .btn-ghost{background:transparent;color:var(--sky-deep);border:1.5px solid var(--sky-deep);padding:0.6rem 1.2rem;border-radius:var(--r-pill);font-weight:600;font-size:0.85rem}
+
+  #loginView{max-width:380px;margin:4.5rem auto;background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:2rem;box-shadow:var(--shadow-md)}
+  #loginView h1{font-size:1.2rem;margin:0 0 0.35rem}
+  #loginView p{color:var(--ink-muted);font-size:0.85rem;margin:0 0 1.5rem}
+  label{display:block;font-size:0.8rem;font-weight:600;color:var(--ink-soft);margin-bottom:0.35rem}
+  input{width:100%;padding:0.7rem 0.85rem;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:0.9rem;margin-bottom:1rem;font-family:inherit}
+  input:focus-visible{outline:2.5px solid var(--sky-deep);outline-offset:1px}
+  .field-error{color:var(--bad);font-size:0.8rem;margin:-0.7rem 0 1rem;display:none}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:1.1rem 1.2rem;box-shadow:var(--shadow-sm)}
+  .card .label{font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--ink-muted);font-weight:700}
+  .card .value{font-size:1.5rem;font-weight:800;color:var(--sky-deep);margin-top:0.3rem}
+  .card .sub{font-size:0.78rem;color:var(--ink-muted);margin-top:0.2rem}
+
+  .toolbar{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1rem;align-items:end}
+  .toolbar .f{display:flex;flex-direction:column;gap:0.3rem}
+  .toolbar label{margin:0;font-size:0.72rem}
+  .toolbar select,.toolbar input{margin:0;padding:0.5rem 0.7rem;font-size:0.82rem;min-width:140px}
+
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;font-size:0.83rem}
+  th,td{text-align:left;padding:0.65rem 0.8rem;border-bottom:1px solid var(--border)}
+  th{background:var(--sky-pale);color:var(--sky-darker);font-weight:700;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px}
+  tr:last-child td{border-bottom:none}
+  .status-pill{display:inline-block;padding:0.2rem 0.65rem;border-radius:var(--r-pill);font-size:0.72rem;font-weight:700}
+  .status-paid{background:#dcfce7;color:var(--ok)}
+  .status-pending,.status-created{background:#fef3c7;color:var(--warn)}
+  .status-failed{background:#fee2e2;color:var(--bad)}
+  .status-refunded{background:#e0e7ff;color:var(--sky-deep)}
+  .table-wrap{overflow-x:auto}
+  .pager{display:flex;gap:0.75rem;align-items:center;margin-top:1rem;font-size:0.83rem;color:var(--ink-soft)}
+  #err{color:var(--bad);font-size:0.85rem;margin-top:0.5rem}
+  .hidden{display:none !important}
+  .muted{color:var(--ink-muted);font-size:0.8rem}
+</style>
+</head>
+<body>
+
+<section id="loginView">
+  <h1>Admin sign in</h1>
+  <p>Amrix Forde donations dashboard. Access is restricted and every session is logged.</p>
+  <form id="loginForm" novalidate>
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="username" required />
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password" required />
+    <div id="loginError" class="field-error" role="alert"></div>
+    <button class="btn" type="submit" style="width:100%">Sign in</button>
+  </form>
+</section>
+
+<div class="wrap hidden" id="dashView">
+  <header>
+    <div class="brand">Amrix Forde <span>Donations Admin</span></div>
+    <button class="btn-ghost" id="logoutBtn">Sign out</button>
+  </header>
+
+  <div class="cards" id="summaryCards"></div>
+
+  <div class="toolbar">
+    <div class="f">
+      <label for="fStatus">Status</label>
+      <select id="fStatus">
+        <option value="">All</option>
+        <option value="created">Created</option>
+        <option value="pending">Pending</option>
+        <option value="paid">Paid</option>
+        <option value="failed">Failed</option>
+        <option value="refunded">Refunded</option>
+      </select>
+    </div>
+    <div class="f">
+      <label for="fPurpose">Purpose</label>
+      <select id="fPurpose">
+        <option value="">All</option>
+        <option value="general_fund">General Fund</option>
+        <option value="orphan_care">Orphan Care</option>
+        <option value="medical_aid">Medical Aid</option>
+        <option value="where_needed_most">Where Needed Most</option>
+      </select>
+    </div>
+    <div class="f">
+      <label for="fSearch">Search (reference / email / name)</label>
+      <input id="fSearch" type="text" placeholder="AMX-... or donor" />
+    </div>
+    <button class="btn" id="applyFilters">Apply</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Reference</th><th>Donor</th><th>Amount</th><th>Purpose</th>
+          <th>Status</th><th>Receipt</th><th>Created</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <div class="pager">
+    <button class="btn-ghost" id="prevPage">Previous</button>
+    <span id="pageInfo"></span>
+    <button class="btn-ghost" id="nextPage">Next</button>
+  </div>
+  <div id="err"></div>
+</div>
+
+<script src="/admin/admin.js"></script>
+</body>
+</html>

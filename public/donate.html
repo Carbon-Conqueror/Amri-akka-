@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Donate securely to Amrix Forde. Payments are processed by Razorpay - we never see or store your card, UPI PIN, or banking details." />
+<title>Donate - Amrix Forde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --sky:#7C3AED;--sky-light:#C4B5FD;--sky-pale:#F5F3FF;
+    --sky-deep:#5B21B6;--sky-darker:#3B0F8C;
+    --white:#fff;--ink:#0A1F2E;
+    --ink-soft:#3A5568;--ink-muted:#718FA4;
+    --accent:#F7C948;--cream:#F5FAFD;
+    --border:rgba(124,58,237,0.15);
+    --sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;
+    --r-sm:12px;--r-md:16px;--r-lg:24px;--r-pill:50px;
+    --shadow-sm:0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md:0 10px 30px rgba(124,58,237,0.14);
+    --shadow-lg:0 24px 60px rgba(124,58,237,0.18);
+    --ok:#1a7f4b;--warn:#b45309;--bad:#b91c1c;
+    --container:760px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Inter",sans-serif;color:var(--ink);background:var(--cream);overflow-x:hidden;line-height:1.5}
+  a{color:var(--sky-deep)}
+  .skip-link{position:absolute;top:-48px;left:1rem;background:var(--sky-deep);color:#fff;padding:0.75rem 1.25rem;border-radius:var(--r-sm);z-index:2000;text-decoration:none;font-weight:600;font-size:0.9rem;transition:top 0.2s}
+  .skip-link:focus{top:1rem}
+  :focus-visible{outline:2.5px solid var(--sky-deep);outline-offset:3px;border-radius:4px}
+
+  header.top{display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+  .home-link{display:flex;align-items:center;gap:0.5rem;text-decoration:none;font-family:"Roboto Slab",serif;font-weight:800;font-size:1.15rem;color:var(--sky-deep)}
+  .back-link{font-size:0.85rem;font-weight:600;color:var(--ink-soft);text-decoration:none}
+  .back-link:hover{color:var(--sky-deep)}
+
+  main{max-width:var(--container);margin:0 auto;padding:var(--sp-6) 5% var(--sp-7)}
+  .page-title{font-family:"Roboto Slab",serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;margin:0 0 0.4rem;color:var(--ink)}
+  .page-sub{color:var(--ink-soft);font-size:0.98rem;margin:0 0 var(--sp-6);max-width:56ch}
+
+  .trust-row{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:var(--sp-6)}
+  .trust-chip{display:inline-flex;align-items:center;gap:6px;background:var(--sky-pale);color:var(--sky-darker);border:1px solid var(--border);font-size:0.76rem;font-weight:600;padding:0.4rem 0.85rem;border-radius:var(--r-pill)}
+
+  .panel{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-md);padding:var(--sp-6);margin-bottom:var(--sp-5)}
+  fieldset{border:none;margin:0;padding:0}
+  legend{font-weight:700;font-size:0.95rem;margin-bottom:var(--sp-3);padding:0;font-family:"Roboto Slab",serif;color:var(--ink)}
+
+  .amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:var(--sp-4)}
+  .amount-chip{position:relative}
+  .amount-chip input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+  .amount-chip label{display:block;text-align:center;padding:0.85rem 0.5rem;border:1.5px solid var(--border);border-radius:var(--r-md);font-weight:700;color:var(--ink-soft);cursor:pointer;transition:all 0.2s;font-size:0.95rem}
+  .amount-chip input:checked + label{border-color:var(--sky-deep);background:var(--sky-pale);color:var(--sky-deep);box-shadow:0 0 0 1px var(--sky-deep) inset}
+  .amount-chip input:focus-visible + label{outline:2.5px solid var(--sky-deep);outline-offset:2px}
+
+  .custom-amount{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:var(--r-md);overflow:hidden;margin-bottom:var(--sp-2)}
+  .custom-amount span{padding:0.85rem 0.9rem;background:var(--sky-pale);color:var(--sky-deep);font-weight:700;font-size:0.95rem}
+  .custom-amount input{border:none;padding:0.85rem 0.9rem;font-size:0.95rem;width:100%;font-family:inherit}
+  .custom-amount input:focus-visible{outline:none}
+  .custom-amount:focus-within{border-color:var(--sky-deep)}
+  .hint{font-size:0.78rem;color:var(--ink-muted);margin:0 0 var(--sp-5)}
+
+  .purpose-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.7rem;margin-bottom:var(--sp-5)}
+  .purpose-chip input{position:absolute;opacity:0}
+  .purpose-chip label{display:block;padding:0.8rem 0.9rem;border:1.5px solid var(--border);border-radius:var(--r-md);cursor:pointer;font-size:0.87rem;font-weight:600;color:var(--ink-soft);transition:all 0.2s}
+  .purpose-chip input:checked + label{border-color:var(--sky-deep);background:var(--sky-pale);color:var(--sky-deep)}
+  .purpose-chip input:focus-visible + label{outline:2.5px solid var(--sky-deep);outline-offset:2px}
+
+  .field{margin-bottom:var(--sp-4)}
+  .field label{display:block;font-size:0.83rem;font-weight:600;color:var(--ink-soft);margin-bottom:0.35rem}
+  .field input{width:100%;padding:0.8rem 0.9rem;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:0.92rem;font-family:inherit}
+  .field input:focus-visible{outline:2.5px solid var(--sky-deep);outline-offset:1px}
+  .field .err{color:var(--bad);font-size:0.8rem;margin-top:0.3rem;display:none}
+  .field.invalid input{border-color:var(--bad)}
+  .field.invalid .err{display:block}
+
+  .submit-row{margin-top:var(--sp-5)}
+  .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--sky-deep);color:#fff;padding:1rem 2rem;border:none;border-radius:var(--r-pill);font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(91,33,182,0.28);transition:all 0.25s;font-family:inherit}
+  .btn-primary:hover:not(:disabled){background:var(--sky);transform:translateY(-2px)}
+  .btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+  .btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;background:transparent;color:var(--sky-deep);padding:0.95rem 2rem;border:1.5px solid var(--sky-deep);border-radius:var(--r-pill);font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none}
+  .form-status{margin-top:var(--sp-3);font-size:0.85rem;color:var(--bad);text-align:center;min-height:1.2em}
+
+  .security-note{display:flex;gap:0.6rem;align-items:flex-start;font-size:0.8rem;color:var(--ink-muted);margin-top:var(--sp-4);line-height:1.5}
+
+  #resultView{display:none}
+  .result-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto var(--sp-4)}
+  .result-icon.paid{background:#dcfce7;color:var(--ok)}
+  .result-icon.failed{background:#fee2e2;color:var(--bad)}
+  .result-icon.pending{background:#fef3c7;color:var(--warn)}
+  .result-title{text-align:center;font-family:"Roboto Slab",serif;font-size:1.5rem;font-weight:800;margin:0 0 0.5rem}
+  .result-desc{text-align:center;color:var(--ink-soft);font-size:0.95rem;margin:0 0 var(--sp-5);max-width:44ch;margin-left:auto;margin-right:auto}
+  .receipt-table{width:100%;border-collapse:collapse;margin-bottom:var(--sp-5)}
+  .receipt-table td{padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.88rem}
+  .receipt-table td:first-child{color:var(--ink-muted);font-weight:600}
+  .receipt-table td:last-child{text-align:right;font-weight:600;color:var(--ink)}
+  .result-actions{display:flex;flex-direction:column;gap:0.7rem}
+  [aria-live]{outline:none}
+
+  @media (max-width:520px){
+    .amount-grid{grid-template-columns:repeat(2,1fr)}
+    .purpose-grid{grid-template-columns:1fr}
+    .panel{padding:var(--sp-5)}
+  }
+</style>
+</head>
+<body>
+<a href="#donateForm" class="skip-link">Skip to donation form</a>
+
+<header class="top">
+  <a href="/" class="home-link">Amrix Forde</a>
+  <a href="/" class="back-link">&larr; Back to site</a>
+</header>
+
+<main>
+  <div id="formView">
+    <h1 class="page-title">Donate to Amrix Forde</h1>
+    <p class="page-sub">Your contribution goes directly toward feeding families and supporting children in orphan care. Payments are processed securely by Razorpay - Amrix Forde never sees or stores your card, UPI PIN, or banking credentials.</p>
+
+    <div class="trust-row">
+      <span class="trust-chip">🔒 Secured by Razorpay</span>
+      <span class="trust-chip">✔ Server-verified payments</span>
+      <span class="trust-chip">🧾 Reference issued for every donation</span>
+    </div>
+
+    <form class="panel" id="donateForm" novalidate>
+      <fieldset>
+        <legend>Choose an amount (INR)</legend>
+        <div class="amount-grid" role="radiogroup" aria-label="Preset donation amount" id="amountGrid"></div>
+        <div class="custom-amount">
+          <span>₹</span>
+          <input type="number" id="customAmount" inputmode="numeric" min="1" step="1" placeholder="Enter a custom amount" aria-describedby="amountHint" />
+        </div>
+        <p class="hint" id="amountHint">Loading minimum and maximum amount…</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Where should this go?</legend>
+        <div class="purpose-grid" role="radiogroup" aria-label="Donation purpose" id="purposeGrid"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Your details</legend>
+        <div class="field" id="fieldName">
+          <label for="donorName">Full name</label>
+          <input type="text" id="donorName" name="donor_name" autocomplete="name" required maxlength="80" />
+          <div class="err" role="alert"></div>
+        </div>
+        <div class="field" id="fieldEmail">
+          <label for="donorEmail">Email address</label>
+          <input type="email" id="donorEmail" name="donor_email" autocomplete="email" required maxlength="254" />
+          <div class="err" role="alert"></div>
+        </div>
+        <div class="field" id="fieldPhone">
+          <label for="donorPhone">Mobile number (10-digit, India)</label>
+          <input type="tel" id="donorPhone" name="donor_phone" autocomplete="tel" required maxlength="14" inputmode="numeric" />
+          <div class="err" role="alert"></div>
+        </div>
+      </fieldset>
+
+      <div class="submit-row">
+        <button type="submit" class="btn-primary" id="submitBtn">
+          <span id="submitLabel">Continue to secure payment</span>
+        </button>
+        <p class="form-status" id="formStatus" role="alert" aria-live="assertive"></p>
+      </div>
+
+      <p class="security-note">
+        You will be redirected to Razorpay's secure checkout to complete payment. Amrix Forde does not collect or store your card number, CVV, UPI PIN, or one-time passwords at any point.
+      </p>
+    </form>
+  </div>
+
+  <div id="resultView" aria-live="polite">
+    <div class="panel" style="text-align:center">
+      <div class="result-icon" id="resultIcon"></div>
+      <h1 class="result-title" id="resultTitle"></h1>
+      <p class="result-desc" id="resultDesc"></p>
+
+      <table class="receipt-table" id="receiptTable" style="display:none">
+        <tbody>
+          <tr><td>Donation reference</td><td id="rRef"></td></tr>
+          <tr><td>Amount</td><td id="rAmount"></td></tr>
+          <tr><td>Date</td><td id="rDate"></td></tr>
+          <tr><td>Purpose</td><td id="rPurpose"></td></tr>
+          <tr><td>Receipt</td><td id="rReceipt"></td></tr>
+        </tbody>
+      </table>
+
+      <div class="result-actions" id="resultActions"></div>
+    </div>
+  </div>
+</main>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="/js/donate.js"></script>
+</body>
+</html>
