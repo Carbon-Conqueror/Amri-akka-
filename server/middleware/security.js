@@ -5,25 +5,17 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const { config } = require('../config');
 
+// This is a JSON-only API - it never serves HTML, so there's no document for
+// a Content-Security-Policy to protect. The CSP that matters (script-src,
+// frame-src for Razorpay Checkout, etc.) lives in the <meta> tag on
+// donate.html/admin/index.html, which are served by GitHub Pages instead.
+// Helmet's other defaults (X-Content-Type-Options, no X-Powered-By, a
+// disabled CSP here, etc.) still apply to every JSON response.
 function buildHelmet() {
   return helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", 'https://checkout.razorpay.com'],
-        frameSrc: ["'self'", 'https://api.razorpay.com', 'https://checkout.razorpay.com'],
-        connectSrc: ["'self'", 'https://api.razorpay.com', 'https://lumberjack.razorpay.com'],
-        imgSrc: ["'self'", 'data:', 'https://*.razorpay.com'],
-        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-        objectSrc: ["'none'"],
-        baseUri: ["'self'"],
-        formAction: ["'self'"],
-        frameAncestors: ["'self'"],
-      },
-    },
+    contentSecurityPolicy: false,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
-    crossOriginResourcePolicy: { policy: 'same-site' },
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
   });
 }
 

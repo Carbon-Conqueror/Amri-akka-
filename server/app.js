@@ -1,6 +1,5 @@
 'use strict';
 
-const path = require('node:path');
 const express = require('express');
 const session = require('express-session');
 const { config } = require('./config');
@@ -10,6 +9,11 @@ const donationsRouter = require('./routes/donations');
 const webhooksRouter = require('./routes/webhooks');
 const adminRouter = require('./routes/admin');
 
+// This app is an API-only backend. The static site (index.html, donate.html,
+// admin/) is served separately by GitHub Pages from the repo root - this
+// server never serves any static files, so there is no path by which server
+// source, package.json/lockfile, tests, node_modules, or .env could ever be
+// exposed over HTTP by this process.
 function createApp() {
   const app = express();
 
@@ -36,8 +40,14 @@ function createApp() {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
+        // The admin UI is served from a different origin (GitHub Pages) than
+        // this API, so the session cookie is cross-site from the browser's
+        // point of view. SameSite=None requires Secure, which in turn
+        // requires HTTPS - only turn it on once the API is actually served
+        // over HTTPS (i.e. in production). In local/same-origin development,
+        // 'lax' + non-secure works over plain http://localhost.
         secure: config.isProduction,
-        sameSite: 'strict',
+        sameSite: config.isProduction ? 'none' : 'lax',
         maxAge: 1000 * 60 * 60 * 2, // 2 hours
       },
     })
@@ -50,13 +60,7 @@ function createApp() {
     res.json({ ok: true, env: config.env });
   });
 
-  // Static site (index.html, donate.html, admin UI) is served from a
-  // dedicated public/ directory - never the repo root - so server source,
-  // package.json/lockfile, tests, and node_modules can never be served as
-  // static files even by accident.
-  app.use(express.static(path.join(__dirname, '..', 'public'), { index: 'index.html', extensions: ['html'] }));
-
-  app.use('/api', notFoundHandler);
+  app.use(notFoundHandler);
   app.use(errorHandler);
 
   return app;

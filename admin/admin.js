@@ -1,6 +1,7 @@
 
 (function(){
   'use strict';
+  var API_BASE = window.AMRIXFORDE_API_BASE || '';
   var csrfToken = null;
   var offset = 0;
   var limit = 25;
@@ -28,7 +29,7 @@
     if (csrfToken && opts.method && opts.method !== 'GET') {
       opts.headers['X-CSRF-Token'] = csrfToken;
     }
-    var res = await fetch('/api/admin' + path, opts);
+    var res = await fetch(API_BASE + '/api/admin' + path, opts);
     var data = await res.json().catch(function(){ return {}; });
     if (!res.ok) {
       var err = new Error(data.error || ('Request failed (' + res.status + ')'));

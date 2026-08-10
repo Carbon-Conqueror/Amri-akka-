@@ -2,6 +2,8 @@
 (function(){
   'use strict';
 
+  var API_BASE = window.AMRIXFORDE_API_BASE || '';
+
   var PURPOSE_LABEL_FALLBACK = {
     general_fund: 'General Fund',
     orphan_care: 'Orphan Care',
@@ -82,7 +84,7 @@
 
   async function loadConfig(){
     try {
-      var res = await fetch('/api/donations/config');
+      var res = await fetch(API_BASE + '/api/donations/config');
       cfg = await res.json();
       buildPurposeGrid(cfg.purposes && cfg.purposes.length ? cfg.purposes : Object.keys(PURPOSE_LABEL_FALLBACK).map(function(id){ return {id:id, label: PURPOSE_LABEL_FALLBACK[id]}; }), cfg.defaultPurposeId);
       document.getElementById('amountHint').textContent =
@@ -141,19 +143,19 @@
       title.textContent = 'Thank You for Making a Difference';
       desc.textContent = 'Your contribution to Amrix Forde has been received successfully.';
       fillReceipt(opts);
-      actions.innerHTML = '<a href="/" class="btn-secondary">Return to homepage</a>';
+      actions.innerHTML = '<a href="index.html" class="btn-secondary">Return to homepage</a>';
     } else if (kind === 'pending') {
       icon.textContent = '⏳';
       title.textContent = 'Confirming your donation';
       desc.textContent = 'We are securely verifying your payment. Please do not make another payment yet - this page will update automatically.';
       fillReceipt(opts);
-      actions.innerHTML = '<a href="/" class="btn-secondary">Return to homepage</a>';
+      actions.innerHTML = '<a href="index.html" class="btn-secondary">Return to homepage</a>';
       if (opts && opts.ref) pollStatus(opts.ref);
     } else {
       icon.textContent = '✕';
       title.textContent = 'Payment could not be completed';
       desc.textContent = 'No confirmed donation has been recorded. If any amount was deducted, it will be automatically reversed by your bank or Razorpay within a few business days.';
-      actions.innerHTML = '<button class="btn-primary" id="retryBtn" type="button">Try again</button><a href="/" class="btn-secondary">Return to homepage</a>';
+      actions.innerHTML = '<button class="btn-primary" id="retryBtn" type="button">Try again</button><a href="index.html" class="btn-secondary">Return to homepage</a>';
       var retryBtn = document.getElementById('retryBtn');
       if (retryBtn) retryBtn.addEventListener('click', resetToForm);
     }
@@ -182,7 +184,7 @@
     pollTimer = setInterval(async function(){
       attempts += 1;
       try {
-        var res = await fetch('/api/donations/status/' + encodeURIComponent(ref));
+        var res = await fetch(API_BASE + '/api/donations/status/' + encodeURIComponent(ref));
         var data = await res.json();
         if (data.ok && data.status === 'paid') {
           clearInterval(pollTimer);
@@ -205,7 +207,7 @@
     document.getElementById('formStatus').textContent = '';
 
     try {
-      var res = await fetch('/api/donations/create-order', {
+      var res = await fetch(API_BASE + '/api/donations/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -249,7 +251,7 @@
         handler: async function(response){
           setSubmitting(true, 'Verifying payment…');
           try {
-            var vRes = await fetch('/api/donations/verify', {
+            var vRes = await fetch(API_BASE + '/api/donations/verify', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -300,7 +302,7 @@
   var params = new URLSearchParams(window.location.search);
   var refParam = params.get('ref');
   if (refParam) {
-    fetch('/api/donations/status/' + encodeURIComponent(refParam)).then(function(r){ return r.json(); }).then(function(d){
+    fetch(API_BASE + '/api/donations/status/' + encodeURIComponent(refParam)).then(function(r){ return r.json(); }).then(function(d){
       if (d.ok) {
         if (d.status === 'paid') showResult('paid', { ref: d.public_reference, amount: d.amount, purpose: d.purpose, receiptStatus: d.receipt_status, date: d.created_at });
         else if (d.status === 'failed') showResult('failed');

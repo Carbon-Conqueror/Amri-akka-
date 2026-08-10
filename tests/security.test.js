@@ -29,9 +29,11 @@ test('never sends Access-Control-Allow-Origin: * on any response', async () => {
   assert.notEqual(res.headers['access-control-allow-origin'], '*');
 });
 
-test('security headers are present (CSP, HSTS-equivalent, nosniff, referrer policy)', async () => {
+test('security headers are present on API responses (nosniff, referrer policy, no X-Powered-By)', async () => {
+  // This app is JSON-only and serves no HTML documents - CSP is a
+  // document-level protection and is intentionally left to the pages
+  // themselves (served by GitHub Pages), not sent here.
   const res = await request(app).get('/healthz');
-  assert.ok(res.headers['content-security-policy']);
   assert.ok(res.headers['x-content-type-options']);
   assert.equal(res.headers['x-content-type-options'], 'nosniff');
   assert.ok(res.headers['referrer-policy']);
@@ -47,8 +49,15 @@ test('a 404 API route responds without leaking a stack trace or file paths', asy
   assert.equal(bodyText.includes('node_modules'), false);
 });
 
-test('static file serving cannot reach server source, env, or package files', async () => {
-  const paths = ['/package.json', '/package-lock.json', '/.env', '/.env.example', '/server/config/index.js', '/server/server.js', '/tests/security.test.js'];
+test('this app serves no static files at all - only /api and /healthz respond', async () => {
+  // The static site (index.html, donate.html, admin/) is served separately
+  // by GitHub Pages, not by this process, so nothing here should ever
+  // resolve a file path - including the site's own pages.
+  const paths = [
+    '/package.json', '/package-lock.json', '/.env', '/.env.example',
+    '/server/config/index.js', '/server/server.js', '/tests/security.test.js',
+    '/index.html', '/donate.html', '/admin/index.html', '/js/main.js',
+  ];
   for (const p of paths) {
     const res = await request(app).get(p);
     assert.equal(res.status, 404, `expected 404 for ${p}, got ${res.status}`);
