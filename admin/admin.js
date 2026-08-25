@@ -1,7 +1,7 @@
 
 (function(){
   'use strict';
-  var API_BASE = window.AMRIXFORDE_API_BASE || '';
+  var API_BASE = window.SAIJEEVANSEVA_API_BASE || '';
   var csrfToken = null;
   var offset = 0;
   var limit = 25;

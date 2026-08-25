@@ -1,4 +1,4 @@
--- Amrix Forde donations schema.
+-- Sai Jeevan Seva donations schema.
 -- Money is stored in the smallest currency unit (paise for INR) as an
 -- integer to avoid floating-point rounding issues, matching how Razorpay
 -- itself represents amounts.

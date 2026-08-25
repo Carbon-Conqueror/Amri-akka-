@@ -2,7 +2,7 @@
 (function(){
   'use strict';
 
-  var API_BASE = window.AMRIXFORDE_API_BASE || '';
+  var API_BASE = window.SAIJEEVANSEVA_API_BASE || '';
 
   var PURPOSE_LABEL_FALLBACK = {
     general_fund: 'General Fund',
@@ -141,7 +141,7 @@
     if (kind === 'paid') {
       icon.textContent = '✓';
       title.textContent = 'Thank You for Making a Difference';
-      desc.textContent = 'Your contribution to Amrix Forde has been received successfully.';
+      desc.textContent = 'Your contribution to Sai Jeevan Seva has been received successfully.';
       fillReceipt(opts);
       actions.innerHTML = '<a href="index.html" class="btn-secondary">Return to homepage</a>';
     } else if (kind === 'pending') {
@@ -244,7 +244,7 @@
         amount: data.amount,
         currency: data.currency,
         order_id: data.order_id,
-        name: 'Amrix Forde',
+        name: 'Sai Jeevan Seva',
         description: 'Donation - ' + (PURPOSE_LABEL_FALLBACK[data.purpose] || data.purpose),
         prefill: data.prefill,
         theme: { color: '#5B21B6' },

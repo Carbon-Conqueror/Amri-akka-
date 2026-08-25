@@ -1,4 +1,4 @@
-# Amrix Forde - Website & Donation Platform
+# Sai Jeevan Seva - Website & Donation Platform
 
 This repository holds two separately-deployed pieces:
 
@@ -19,7 +19,7 @@ index.html          Main site (GitHub Pages)
 donate.html          Dedicated donation page (Razorpay Standard Checkout)
 admin/index.html     Admin dashboard (client-rendered, server-authorized)
 js/
-  config.js           Sets window.AMRIXFORDE_API_BASE - THE ONE FILE TO EDIT
+  config.js           Sets window.SAIJEEVANSEVA_API_BASE - THE ONE FILE TO EDIT
                        when you deploy the API somewhere (see below)
   main.js, donate.js  Page logic for index.html / donate.html
 admin/admin.js         Page logic for the admin dashboard
@@ -53,7 +53,7 @@ what `server/` is for, and it needs an actual Node runtime.
 
 The frontend never receives, and the server never needs to expose, your Razorpay
 secret key, webhook secret, or any card/UPI/OTP data. Razorpay Checkout collects
-payment details directly; Amrix Forde never touches them.
+payment details directly; Sai Jeevan Seva never touches them.
 
 ## Deploying the API
 
@@ -66,10 +66,10 @@ Fly.io, and a plain VPS all work. In broad strokes:
    Critically, `CORS_ALLOWED_ORIGINS` must include
    `https://carbon-conqueror.github.io` or the browser will reject every request
    from the site.
-3. Once deployed, you'll have a URL like `https://amrix-forde-api.onrender.com`.
+3. Once deployed, you'll have a URL like `https://sai-jeevan-seva-api.onrender.com`.
    Put it in **`js/config.js`**:
    ```js
-   window.AMRIXFORDE_API_BASE = 'https://amrix-forde-api.onrender.com';
+   window.SAIJEEVANSEVA_API_BASE = 'https://sai-jeevan-seva-api.onrender.com';
    ```
    This is the one file the static site reads to know where the API lives - commit
    that change and GitHub Pages will pick it up.
@@ -152,10 +152,10 @@ Before accepting real donations:
 ## Configuration flags that must stay off until legally verified
 
 - `ENABLE_INTERNATIONAL_DONATIONS` (default `false`): accepting foreign
-  contributions may require FCRA registration. Leave off until Amrix Forde's
+  contributions may require FCRA registration. Leave off until Sai Jeevan Seva's
   legal/accounting team confirms compliance and Razorpay authorizes the flow.
 - `ENABLE_80G_RECEIPT_CLAIM` (default `false`) / `EIGHTY_G_REGISTRATION_NUMBER`:
-  do not claim 80G tax-deductibility on receipts until Amrix Forde holds a valid,
+  do not claim 80G tax-deductibility on receipts until Sai Jeevan Seva holds a valid,
   current 80G registration and the receipt wording has been checked against it.
 
 ## A known limitation: GitHub Pages and security headers
@@ -163,7 +163,7 @@ Before accepting real donations:
 GitHub Pages does not let you set custom HTTP response headers, so the site cannot
 send a `Content-Security-Policy`, `X-Frame-Options`, or `Strict-Transport-Security`
 header the way the API does (via `helmet` in `server/middleware/security.js`). The
-API's own responses still get these headers. If Amrix Forde later moves the static
+API's own responses still get these headers. If Sai Jeevan Seva later moves the static
 site to a host that supports custom headers, a CSP equivalent to what was removed
 from the API (see git history) should be added there.
 

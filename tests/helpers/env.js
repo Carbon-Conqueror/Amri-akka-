@@ -24,7 +24,7 @@ function setupTestEnv(dbName) {
   process.env.ADMIN_PASSWORD_HASH = bcrypt.hashSync(TEST_ADMIN_PASSWORD, 4);
   process.env.DATABASE_PATH = path.join(
     require('node:os').tmpdir(),
-    `amrixforde-test-${dbName}-${crypto.randomBytes(4).toString('hex')}.sqlite`
+    `saijeevanseva-test-${dbName}-${crypto.randomBytes(4).toString('hex')}.sqlite`
   );
   return process.env.DATABASE_PATH;
 }

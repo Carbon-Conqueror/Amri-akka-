@@ -8,5 +8,5 @@ assertValidConfig();
 const app = createApp();
 
 app.listen(config.port, () => {
-  console.log(`[server] Amrix Forde donations server listening on port ${config.port} (${config.env})`);
+  console.log(`[server] Sai Jeevan Seva donations server listening on port ${config.port} (${config.env})`);
 });

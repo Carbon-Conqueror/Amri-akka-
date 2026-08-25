@@ -1,8 +1,8 @@
 {
-  "name": "amrix-forde-donations",
+  "name": "sai-jeevan-seva-donations",
   "version": "1.0.0",
   "private": true,
-  "description": "Amrix Forde donation platform: static site + Razorpay-backed donation API",
+  "description": "Sai Jeevan Seva donation platform: static site + Razorpay-backed donation API",
   "type": "commonjs",
   "engines": {
     "node": ">=18.0.0"

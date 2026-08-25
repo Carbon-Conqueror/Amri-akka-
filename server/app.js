@@ -34,7 +34,7 @@ function createApp() {
 
   app.use(
     session({
-      name: 'amrixforde.sid',
+      name: 'saijeevanseva.sid',
       secret: config.admin.sessionSecret || 'dev-only-insecure-secret-change-me',
       resave: false,
       saveUninitialized: false,

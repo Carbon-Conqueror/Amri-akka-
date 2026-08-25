@@ -31,7 +31,7 @@ function prompt(question, { hidden } = {}) {
 }
 
 async function main() {
-  console.log('Amrix Forde admin credential generator');
+  console.log('Sai Jeevan Seva admin credential generator');
   console.log('This does NOT create a user in a database - it prints values for your .env file.\n');
 
   const email = (await prompt('Admin email: ')).trim();

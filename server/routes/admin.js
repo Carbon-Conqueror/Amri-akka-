@@ -48,7 +48,7 @@ router.post('/logout', requireAdminAuth, requireCsrfToken, (req, res, next) => {
   req.session.destroy((err) => {
     if (err) return next(err);
     repo.insertAuditLog({ adminEmail: email, action: 'admin_logout', detail: null });
-    res.clearCookie('amrixforde.sid');
+    res.clearCookie('saijeevanseva.sid');
     res.json({ ok: true });
   });
 });

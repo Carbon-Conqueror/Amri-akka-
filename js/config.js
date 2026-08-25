@@ -6,4 +6,4 @@
 // http://localhost:3000. If you're serving this static site from the same
 // origin as the API (e.g. testing everything through one process), you can
 // instead set this to '' so requests are same-origin/relative.
-window.AMRIXFORDE_API_BASE = 'http://localhost:3000';
+window.SAIJEEVANSEVA_API_BASE = 'http://localhost:3000';
