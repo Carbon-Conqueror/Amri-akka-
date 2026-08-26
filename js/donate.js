@@ -247,7 +247,7 @@
         name: 'Sai Jeevan Seva',
         description: 'Donation - ' + (PURPOSE_LABEL_FALLBACK[data.purpose] || data.purpose),
         prefill: data.prefill,
-        theme: { color: '#5B2A7C' },
+        theme: { color: '#2D416C' },
         handler: async function(response){
           setSubmitting(true, 'Verifying payment…');
           try {
